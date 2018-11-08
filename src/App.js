@@ -45,6 +45,28 @@ class App extends Component {
       cursor: 'pointer'
     };
 
+    let persons = null;
+
+    // We have changed the ternary conditions to this
+    // because is most elegant and also because ternary
+    // using in multiple places can lead to issues
+    if(this.state.showPersons){
+      persons = (
+        <div>
+          <Person 
+            name={this.state.persons[0].name} 
+            age={this.state.persons[0].age}/>
+          <Person 
+            name={this.state.persons[1].name} 
+            age={this.state.persons[1].age}
+            click={this.switchNameHandler.bind(this, 'Canales Ibarra')}
+            changed={this.nameChangeHandler}>
+            Hobbies: Pets
+          </Person>
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <h1>Hi, I'm a react app</h1>
@@ -60,7 +82,9 @@ class App extends Component {
           Toggle Persons
         </button>
         { 
-          this.state.showPersons ? 
+          persons
+          // this.state.showPersons ?
+          /*
           <div>
             <Person 
               name={this.state.persons[0].name} 
@@ -73,7 +97,8 @@ class App extends Component {
               Hobbies: Pets
             </Person>
           </div>
-          : null
+          */
+          // : null
         }
       </div>
     );
