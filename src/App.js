@@ -5,30 +5,60 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons: [
-      { name: 'Andres', age: 31},
-      { name: 'Mane', age: 30 }
+      { id: 'asdf', name: 'Andres', age: 31},
+      { id: 'asfs', name: 'Mane', age: 30 }
     ],
     showPersons: false
   }
 
-  switchNameHandler = (newName) =>{
-    console.log('Was clicked');
-    // Don't do this: this.state.persons[0].name = "Ramon Andres";
-    this.setState({ 
-      persons: [
-        { name: newName, age: 31},
-        { name: 'Mane', age: 31 }
-      ] 
-    })
+  // switchNameHandler = (newName) =>{
+  //   console.log('Was clicked');
+  //   // Don't do this: this.state.persons[0].name = "Ramon Andres";
+  //   this.setState({ 
+  //     persons: [
+  //       { name: newName, age: 31},
+  //       { name: 'Mane', age: 31 }
+  //     ] 
+  //   })
+  // }
+
+  deletePersonHandler = (personIndex) =>{
+    // We're going to modify a const but that is because 
+    //the const is only pointing to the array.
+    // const persons = this.state.persons;
+
+    // Also when doing splice we're mutating(chaging) the
+    // original data, but this can lead to unpredictable 
+    // apps. So we're going to create a copy of the data
+    // before manipulating with slice() or the commented 
+    // next line to slice which is the spread operator.
+
+    const persons = this.state.persons.slice();
+    // const persons = [...this.state.persons];
+    persons.splice(personIndex, 1);
+    this.setState({persons: persons});
   }
 
-  nameChangeHandler = (event) => {
-    this.setState({ 
-      persons: [
-        { name: 'RAMON', age: 31},
-        { name: event.target.value, age: 31 }
-      ] 
-    })
+  nameChangeHandler = (event, id) => {
+    // First we find the index that will be modified
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    // Then we create a copy of the original object to
+    // not manipulate the state of the original one.
+    const person = {
+      ...this.state.persons[personIndex]
+    };
+
+    // We set up the new name which is in the value of
+    // the event.target which is simply the input.
+    person.name = event.target.value;
+    // Persons will be the new object with the new value.
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
+    this.setState({ persons: persons });
   }
 
   togglePersonsHandler = () => {
@@ -53,16 +83,15 @@ class App extends Component {
     if(this.state.showPersons){
       persons = (
         <div>
-          <Person 
-            name={this.state.persons[0].name} 
-            age={this.state.persons[0].age}/>
-          <Person 
-            name={this.state.persons[1].name} 
-            age={this.state.persons[1].age}
-            click={this.switchNameHandler.bind(this, 'Canales Ibarra')}
-            changed={this.nameChangeHandler}>
-            Hobbies: Pets
-          </Person>
+          {this.state.persons.map((person, index) => {
+            return <Person 
+              click={() => this.deletePersonHandler(index)}
+              name={person.name} 
+              age={person.age}
+              key={person.id}
+              changed={(event) => this.nameChangeHandler(event, person.id)} />
+          })}
+          
         </div>
       );
     }
@@ -85,18 +114,17 @@ class App extends Component {
           persons
           // this.state.showPersons ?
           /*
-          <div>
-            <Person 
-              name={this.state.persons[0].name} 
-              age={this.state.persons[0].age}/>
-            <Person 
-              name={this.state.persons[1].name} 
-              age={this.state.persons[1].age}
-              click={this.switchNameHandler.bind(this, 'Canales Ibarra')}
-              changed={this.nameChangeHandler}>
-              Hobbies: Pets
-            </Person>
-          </div>
+          JSX Persons harcode elements:
+          <Person 
+            name={this.state.persons[0].name} 
+            age={this.state.persons[0].age}/>
+          <Person 
+            name={this.state.persons[1].name} 
+            age={this.state.persons[1].age}
+            click={this.switchNameHandler.bind(this, 'Canales Ibarra')}
+            changed={this.nameChangeHandler}>
+            Hobbies: Pets
+          </Person>
           */
           // : null
         }
