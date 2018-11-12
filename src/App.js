@@ -6,7 +6,8 @@ class App extends Component {
   state = {
     persons: [
       { id: 'asdf', name: 'Andres', age: 31},
-      { id: 'asfs', name: 'Mane', age: 30 }
+      { id: 'asfs', name: 'Mane', age: 30 },
+      { id: 'asdal', name: "Sofi", age: 0}
     ],
     showPersons: false
   }
@@ -68,7 +69,8 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
@@ -94,12 +96,25 @@ class App extends Component {
           
         </div>
       );
+      style.backgroundColor = 'red';
     }
+
+    // Adding dynamically classes depending the status:
+    let classes = [];
+    if(this.state.persons.length <= 2){
+      classes.push('red'); //classes = ['red']
+    }
+
+    if(this.state.persons.length <= 1){
+      classes.push('bold'); //classes = ['red', 'bold']
+    }
+
 
     return (
       <div className="App">
         <h1>Hi, I'm a react app</h1>
-        <p>This is really working.</p>
+        {/* Here we add a join because className value should be a string and not an array as original is.*/}
+        <p className={classes.join(' ')}>This is really working.</p>
         {/*If we call in the onClick={this.switchNameHandler()} with parentesis
           it will be executed inmediately the page load. Without () is just a
           reference. Also check that we can send an anonymous function in the
