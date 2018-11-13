@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium, { StyleRoot } from 'radium';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -74,7 +75,11 @@ class App extends Component {
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     };
 
     let persons = null;
@@ -97,6 +102,10 @@ class App extends Component {
         </div>
       );
       style.backgroundColor = 'red';
+      style[':hover'] = {
+        backgroundColor: 'salmon',
+        color: 'black'
+      };
     }
 
     // Adding dynamically classes depending the status:
@@ -111,6 +120,7 @@ class App extends Component {
 
 
     return (
+      <StyleRoot>
       <div className="App">
         <h1>Hi, I'm a react app</h1>
         {/* Here we add a join because className value should be a string and not an array as original is.*/}
@@ -144,10 +154,11 @@ class App extends Component {
           // : null
         }
       </div>
+      </StyleRoot>
     );
     // Next commented line is what is translated from return above:
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work?'));
   }
 }
 
-export default App;
+export default Radium(App);
