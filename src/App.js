@@ -68,16 +68,8 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer'
-    };
-
     let persons = null;
+    let btnClass = '';
 
     // We have changed the ternary conditions to this
     // because is most elegant and also because ternary
@@ -96,7 +88,7 @@ class App extends Component {
           
         </div>
       );
-      style.backgroundColor = 'red';
+      btnClass = 'Red';
     }
 
     // Adding dynamically classes depending the status:
@@ -121,7 +113,7 @@ class App extends Component {
           onClick, but author says it not as efficient as using bind.
         */}
         <button 
-          style={style}
+          className={btnClass}
           onClick={() => this.togglePersonsHandler()}>
           Toggle Persons
         </button>

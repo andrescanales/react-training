@@ -7,8 +7,12 @@
 	text-align: center;
 }
 
-/*@media (min-width: 500px){
+.red {
+	color: blue;
+}
+
+@media (min-width: 500px){
 	.Person {
 		width: 450px;
 	}
-}*/
+}
