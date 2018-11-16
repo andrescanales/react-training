@@ -13,17 +13,6 @@ class App extends Component {
     showPersons: false
   }
 
-  // switchNameHandler = (newName) =>{
-  //   console.log('Was clicked');
-  //   // Don't do this: this.state.persons[0].name = "Ramon Andres";
-  //   this.setState({ 
-  //     persons: [
-  //       { name: newName, age: 31},
-  //       { name: 'Mane', age: 31 }
-  //     ] 
-  //   })
-  // }
-
   deletePersonHandler = (personIndex) =>{
     // We're going to modify a const but that is because 
     //the const is only pointing to the array.
