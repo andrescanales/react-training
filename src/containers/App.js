@@ -4,14 +4,43 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
-  state = {
-    persons: [
-      { id: 'asdf', name: 'Andres', age: 31},
-      { id: 'asfs', name: 'Mane', age: 30 },
-      { id: 'asdal', name: "Sofi", age: 0}
-    ],
-    showPersons: false
+  // Execution order: 1st.
+  constructor(props){
+    // Only in the constructor of a class we can call props
+    // without using this before it. Everywhere else use with
+    // this statement.
+    // props.title
+    super(props); // <- Always use it, otherwise it won't work.
+    console.log('[App.js] Inside constructor', props);
+    // Implementing this.state here is not recommended but possible.
+    this.state = {
+        persons: [
+          { id: 'asdf', name: 'Andres', age: 31},
+          { id: 'asfs', name: 'Mane', age: 30 },
+          { id: 'asdal', name: "Sofi", age: 0}
+        ],
+        showPersons: false
+    }
   }
+
+  // Execution order: 2nd.
+  componentWillMount(){
+    console.log('[App.js] Inside componentWillMount()');
+  }
+
+  // Execution order: 4rd.
+  componentDidMount(){
+    console.log('[App.js] Inside componentDidMount()');
+  }
+
+  // state = {
+  //   persons: [
+  //     { id: 'asdf', name: 'Andres', age: 31},
+  //     { id: 'asfs', name: 'Mane', age: 30 },
+  //     { id: 'asdal', name: "Sofi", age: 0}
+  //   ],
+  //   showPersons: false
+  // }
 
   deletePersonHandler = (personIndex) =>{
     // We're going to modify a const but that is because 
@@ -57,7 +86,9 @@ class App extends Component {
     this.setState({showPersons: !doesShow});
   }
 
+  // Execution order: 3rd.
   render() {
+    console.log('[App.js] Inside render()');
     let persons = null;
 
     // We have changed the ternary conditions to this
