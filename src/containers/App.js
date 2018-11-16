@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
   state = {
@@ -70,72 +70,28 @@ class App extends Component {
 
   render() {
     let persons = null;
-    let btnClass = '';
 
     // We have changed the ternary conditions to this
     // because is most elegant and also because ternary
     // using in multiple places can lead to issues
     if(this.state.showPersons){
-      persons = (
-        <div>
-          {this.state.persons.map((person, index) => {
-            return <ErrorBoundary key={person.id}> 
-              <Person 
-                click={() => this.deletePersonHandler(index)}
-                name={person.name} 
-                age={person.age}
-                changed={(event) => this.nameChangeHandler(event, person.id)} 
-              />
-            </ ErrorBoundary>
-          })}
-          
-        </div>
-      );
-      btnClass = 'Red';
-    }
-
-    // Adding dynamically classes depending the status:
-    let classes = [];
-    if(this.state.persons.length <= 2){
-      classes.push('red'); //classes = ['red']
-    }
-
-    if(this.state.persons.length <= 1){
-      classes.push('bold'); //classes = ['red', 'bold']
+      persons = <Persons 
+          persons={this.state.persons}
+          clicked={this.deletePersonHandler}
+          changed={this.nameChangeHandler} />;
     }
 
 
     return (
       <div className="App">
-        <h1>Hi, I'm a react app</h1>
-        {/* Here we add a join because className value should be a string and not an array as original is.*/}
-        <p className={classes.join(' ')}>This is really working.</p>
-        {/*If we call in the onClick={this.switchNameHandler()} with parentesis
-          it will be executed inmediately the page load. Without () is just a
-          reference. Also check that we can send an anonymous function in the
-          onClick, but author says it not as efficient as using bind.
-        */}
-        <button 
-          className={btnClass}
-          onClick={() => this.togglePersonsHandler()}>
-          Toggle Persons
-        </button>
+        <Cockpit 
+          appTitle={this.props.title}
+          showPersons={this.state.showPersons} 
+          persons={this.state.persons}
+          clicked={this.togglePersonsHandler} />
         { 
           persons
           // this.state.showPersons ?
-          /*
-          JSX Persons harcode elements:
-          <Person 
-            name={this.state.persons[0].name} 
-            age={this.state.persons[0].age}/>
-          <Person 
-            name={this.state.persons[1].name} 
-            age={this.state.persons[1].age}
-            click={this.switchNameHandler.bind(this, 'Canales Ibarra')}
-            changed={this.nameChangeHandler}>
-            Hobbies: Pets
-          </Person>
-          */
           // : null
         }
       </div>
