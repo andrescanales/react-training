@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
-class App extends Component {
+class App extends PureComponent {
   // Execution order: 1st.
   constructor(props){
     // Only in the constructor of a class we can call props
@@ -33,11 +33,13 @@ class App extends Component {
     console.log('[App.js] Inside componentDidMount()');
   }
 
-  shouldComponentUpdate(nextProps, nextState){
-    // Update 1 of internal update by state
-    console.log('[UPDATE App.js] Inside shouldComponentUpdate', nextProps, nextState);
-    return true;
-  }
+  // Check in Persons.js why we're not implementing this anymore:
+  // shouldComponentUpdate(nextProps, nextState){
+  //   // Update 1 of internal update by state
+  //   console.log('[UPDATE App.js] Inside shouldComponentUpdate', nextProps, nextState);
+  //   return nextState.persons !== this.state.persons ||
+  //     nextState.showPersons !== this.state.showPersons;
+  // }
 
   componentWillUpdate(nextProps, nextState){
     console.log('[UPDATE App.js] Inside componentWillUpdate', nextProps, nextState);
@@ -118,6 +120,7 @@ class App extends Component {
 
     return (
       <div className="App">
+        <button onClick={() => {this.setState({showPersons: true})}}>Show Persons</button>
         <Cockpit 
           appTitle={this.props.title}
           showPersons={this.state.showPersons} 

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import Person from './Person/Person';
 
-class Persons extends Component {
+class Persons extends PureComponent {
 	constructor(props){
     super(props); // <- Always use it, otherwise constructor won't work.
     console.log('[Persons.js] Inside constructor', props);
@@ -21,13 +21,22 @@ class Persons extends Component {
   	console.log('[UPDATE Persons.js] Inside componentWillReceiveProps', nextProps);
   }
 
-  shouldComponentUpdate(nextProps, nextState){
-  	// Update 2
-  	console.log('[UPDATE Persons.js] Inside shouldComponentUpdate', nextProps, nextState);
-  	// This method always needs to return true or false, if false the DOM update will stop
-  	// return false;
-  	return nextProps.persons !== this.props.persons;
-  }
+  // We're commenting this to implement PureComponent which basically
+  // have shouldComponentUpdate checks(the return comparisions) 
+  // internally built in.
+
+  // shouldComponentUpdate(nextProps, nextState){
+  // 	// Update 2
+  // 	console.log('[UPDATE Persons.js] Inside shouldComponentUpdate', nextProps, nextState);
+  // 	// This method always needs to return true or false, if false the DOM update will stop
+  // 	// return false;
+  // 	return nextProps.persons !== this.props.persons || 
+  // 		nextProps.changed !== this.props.changed ||
+  // 		nextProps.clicked !== this.props.clicked;
+  // 	// Don't do return true here because it will render all the update methods even tough nothing changes
+  // 	// which is a performance issue, instead evaluate if nextProps is diff from props original:
+  // 	// return true;
+  // }
 
   componentWillUpdate(nextProps, nextState){
   	// Update 3
