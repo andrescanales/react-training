@@ -4,6 +4,8 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import WithClass from '../hoc/WithClass';
 
+export const AuthContext = React.createContext(false);
+
 class App extends PureComponent {
   // Execution order: 1st.
   constructor(props){
@@ -125,11 +127,13 @@ class App extends PureComponent {
     // because is most elegant and also because ternary
     // using in multiple places can lead to issues
     if(this.state.showPersons){
-      persons = <Persons 
+      persons = (
+        <Persons 
           persons={this.state.persons}
           clicked={this.deletePersonHandler}
           changed={this.nameChangeHandler}
-          isAuthenticated = {this.state.authenticated} />;
+        />
+      );
     }
 
 
@@ -143,11 +147,13 @@ class App extends PureComponent {
           persons={this.state.persons}
           login={this.loginHandler}
           clicked={this.togglePersonsHandler} />
-        { 
-          persons
-          // this.state.showPersons ?
-          // : null
-        }
+        <AuthContext.Provider value={this.state.authenticated}>
+          { 
+            persons
+            // this.state.showPersons ?
+            // : null
+          }
+        </AuthContext.Provider>
       </WithClass>
     );
     // Next commented line is what is translated from return above:

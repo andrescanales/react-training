@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import './Person.css';
 import WithClass from '../../../hoc/WithClass';
+import { AuthContext } from '../../../containers/App';
 
 class Person extends Component {
 	constructor(props){
@@ -26,7 +27,9 @@ class Person extends Component {
 		console.log('[Person.js] Inside render()');
 		return (
 			<WithClass classes='Person'>
-				{this.props.authenticated === true ? <p>Welcome user!</p> : null}
+				<AuthContext.Consumer>
+					{auth => auth === true ? <p>Welcome user!</p> : null}
+				</AuthContext.Consumer>
 				<p onClick={this.props.click}>I'm a {this.props.name} and I am {this.props.age} years old!</p>
 				{/* Children element are within tags in person component */}
 				<p>{this.props.children}</p>
