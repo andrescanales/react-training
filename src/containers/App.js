@@ -102,10 +102,12 @@ class App extends PureComponent {
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
     // Remember that this.setState is executed async by react.
-    this.setState({
-      showPersons: !doesShow, 
-      // This is working so far, but there's a better way to update
-      toggleClicked: this.state.toggleClicked + 1
+    this.setState((prevState, props) => {
+      return {
+        showPersons: !doesShow, 
+        // Better way to update toggleClicked:
+        toggleClicked: prevState.toggleClicked + 1
+      }
     });
   }
 
