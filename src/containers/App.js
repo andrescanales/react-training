@@ -21,7 +21,8 @@ class App extends PureComponent {
           { id: 'asdal', name: "Sofi", age: 0}
         ],
         showPersons: false,
-        toggleClicked: 0
+        toggleClicked: 0,
+        authenticated: false
     }
   }
 
@@ -111,6 +112,10 @@ class App extends PureComponent {
     });
   }
 
+  loginHandler = () => {
+    this.setState({authenticated: true});
+  }
+
   // Execution order: 3rd.
   render() {
     console.log('[App.js] Inside render()');
@@ -123,7 +128,8 @@ class App extends PureComponent {
       persons = <Persons 
           persons={this.state.persons}
           clicked={this.deletePersonHandler}
-          changed={this.nameChangeHandler} />;
+          changed={this.nameChangeHandler}
+          isAuthenticated = {this.state.authenticated} />;
     }
 
 
@@ -135,6 +141,7 @@ class App extends PureComponent {
           appTitle={this.props.title}
           showPersons={this.state.showPersons} 
           persons={this.state.persons}
+          login={this.loginHandler}
           clicked={this.togglePersonsHandler} />
         { 
           persons
