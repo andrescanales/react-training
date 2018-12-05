@@ -1,15 +1,16 @@
 import React from 'react';
 
 import './Cockpit.css';
+import Aux from '../../hoc/Aux';
 
 const cockpit = (props) => {
 
 	// Adding dynamically classes depending the status:
   let assignedClasses = [];
 
-  let btnClass = '';
+  let btnClass = 'Button';
 	if (props.showPersons){
-		btnClass = 'Red';
+		btnClass = ['Button', 'Red'].join(' ');
 	}
   
   if(props.persons.length <= 2){
@@ -21,7 +22,10 @@ const cockpit = (props) => {
   }
 
 	return(
-		<div className='Cockpit'>
+		// Adding a higher order component. This is done beacuse sometimes 
+		// you don't need to another html tag(<div>) for your component for
+		// styling issues
+		<Aux>
 			<h1>{ props.appTitle }</h1>
 	    {/* Here we add a join because className value should be a string and not an array as original is.*/}
 	    <p className={assignedClasses.join(' ')}>This is really working.</p>
@@ -35,7 +39,7 @@ const cockpit = (props) => {
 	      onClick={() => props.clicked()}>
 	      Toggle Persons
 	    </button>
-    </div>
+    </Aux>
 	);
 };
 
