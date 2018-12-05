@@ -20,7 +20,8 @@ class App extends PureComponent {
           { id: 'asfs', name: 'Mane', age: 30 },
           { id: 'asdal', name: "Sofi", age: 0}
         ],
-        showPersons: false
+        showPersons: false,
+        toggleClicked: 0
     }
   }
 
@@ -70,8 +71,8 @@ class App extends PureComponent {
     // before manipulating with slice() or the commented 
     // next line to slice which is the spread operator.
 
-    const persons = this.state.persons.slice();
-    // const persons = [...this.state.persons];
+    // const persons = this.state.persons.slice();
+    const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
     this.setState({persons: persons});
   }
@@ -100,7 +101,12 @@ class App extends PureComponent {
 
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
-    this.setState({showPersons: !doesShow});
+    // Remember that this.setState is executed async by react.
+    this.setState({
+      showPersons: !doesShow, 
+      // This is working so far, but there's a better way to update
+      toggleClicked: this.state.toggleClicked + 1
+    });
   }
 
   // Execution order: 3rd.
