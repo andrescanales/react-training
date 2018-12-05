@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import WithClass from '../hoc/WithClass';
 
 class App extends PureComponent {
   // Execution order: 1st.
@@ -119,7 +120,8 @@ class App extends PureComponent {
 
 
     return (
-      <div className="App">
+      // We replace our div tag for HOC
+      <WithClass classes='App'>
         <button onClick={() => {this.setState({showPersons: true})}}>Show Persons</button>
         <Cockpit 
           appTitle={this.props.title}
@@ -131,7 +133,7 @@ class App extends PureComponent {
           // this.state.showPersons ?
           // : null
         }
-      </div>
+      </WithClass>
     );
     // Next commented line is what is translated from return above:
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work?'));
