@@ -50,6 +50,20 @@ class App extends PureComponent {
     console.log('[UPDATE App.js] Inside componentWillUpdate', nextProps, nextState);
   }
 
+  // New hook of the lifelcycle provided since React 16.3:
+  // This is executed whenever your props are updated and also gives you the 
+  // chance to update the state in it.
+  static getDerivedStateFromProps(nextProps, prevState){
+    console.log('[Update App.js] Inside getDerivedStateFromProps', nextProps, prevState);
+    return prevState;
+  }
+
+  // New lifecycle hook: This will give us the chance to get 
+  // a snapshot of our DOM before update
+  getSnapshotBeforeUpdate(){
+    console.log('[Update App.js] Inside getSnapshotBeforeUpdate');
+  }
+
   componentDidUpdate(){
     console.log('[UPDATE App.js] Inside componentDidUpdate');
   }
