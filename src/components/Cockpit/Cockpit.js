@@ -44,4 +44,6 @@ const cockpit = (props) => {
 	);
 };
 
-export default cockpit;
+// React.memo will check if the props recieved up there have really changed if 
+// not then it will not re-render
+export default React.memo(cockpit);
